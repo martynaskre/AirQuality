@@ -15,14 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.2"
-
       - name: Deploy
         uses: deployphp/action@v1
         with:
           private-key: ${{ secrets.SERVER_PRIVATE_KEY }}
           dep: deploy
           sub-directory: server
+          deployer-version: "7.5.12"
