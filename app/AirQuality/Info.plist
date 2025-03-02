@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSAccessorySetupBluetoothServices</key>
+	<array>
+		<string>A6136564-90D6-4E01-8250-9FE5E9F38442</string>
+	</array>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_airquality._tcp</string>
+	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Gather location updates to get SSID</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Gather location updates to get SSID</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Use the local network to communicate with another device your app is associated to</string>
+	<key>NSAccessorySetupKitSupports</key>
+	<array>
+		<string>Bluetooth</string>
+	</array>
+</dict>
+</plist>

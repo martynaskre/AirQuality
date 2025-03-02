@@ -1,0 +1,13 @@
+//
+// Created by Martynas Skrebė on 27/11/2024.
+//
+
+#ifndef AIRQUALITY_MONGOOSE_CONFIG_H
+#define AIRQUALITY_MONGOOSE_CONFIG_H
+
+
+#define MG_ARCH MG_ARCH_FREERTOS
+#define MG_ENABLE_LWIP 1
+
+
+#endif //AIRQUALITY_MONGOOSE_CONFIG_H
