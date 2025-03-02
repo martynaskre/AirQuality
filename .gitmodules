@@ -1,0 +1,9 @@
+[submodule "device/lib/pico-sdk"]
+	path = device/lib/pico-sdk
+	url = https://github.com/raspberrypi/pico-sdk
+[submodule "device/lib/FreeRTOS-Kernel"]
+	path = device/lib/FreeRTOS-Kernel
+	url = https://github.com/FreeRTOS/FreeRTOS-Kernel
+[submodule "device/lib/pimoroni-pico"]
+	path = device/lib/pimoroni-pico
+	url = https://github.com/pimoroni/pimoroni-pico
