@@ -142,7 +142,16 @@ struct DeviceView: View {
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(12)
                 }
-                .padding()
+                .padding(.top)
+                .padding(.horizontal)
+                .padding(.bottom, 5)
+                HStack {
+                    Spacer()
+                    Text("Collected \(Date().diffForHumans(to: sensorData.collectedAt))")
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
+                }
+                .padding(.horizontal, 20)
             } else {
                 HStack {
                     Text("No data available")
