@@ -6,10 +6,13 @@
 //
 
 enum CloudEndpoint: Endpoint {
+    case devices
     case measurements
     
     func path() -> String {
         switch self {
+        case .devices:
+            return "devices"
         case .measurements:
             return "measurements"
         }

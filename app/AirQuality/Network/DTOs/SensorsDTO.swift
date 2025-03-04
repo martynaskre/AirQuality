@@ -9,7 +9,7 @@ import Foundation
 
 struct SensorsDTO: Decodable {
     public enum CodingKeys: CodingKey {
-        case lux, temperature, pressure, humidity, eco2, tvoc
+        case lux, temperature, pressure, humidity, eco2, tvoc, collectedAt
     }
     
     let lux: Measurement<UnitIlluminance>
@@ -18,6 +18,7 @@ struct SensorsDTO: Decodable {
     let humidity: Double
     let eCO2: Double
     let TVOC: Double
+    let collectedAt: Date
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -28,14 +29,6 @@ struct SensorsDTO: Decodable {
         self.humidity = try container.decode(Double.self, forKey: .humidity)
         self.eCO2 = try container.decode(Double.self, forKey: .eco2)
         self.TVOC = try container.decode(Double.self, forKey: .tvoc)
-    }
-    
-    init() {
-        self.lux = .init(value: 0, unit: .lux)
-        self.temperature = .init(value: 0, unit: .celsius)
-        self.pressure = .init(value: 0, unit: .hectopascals)
-        self.humidity = 0
-        self.eCO2 = 0
-        self.TVOC = 0
+        self.collectedAt = try container.decode(Date.self, forKey: .collectedAt)
     }
 }

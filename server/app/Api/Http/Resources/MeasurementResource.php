@@ -21,6 +21,7 @@ class MeasurementResource extends JsonResource
             'humidity' => $this->humidity,
             'eco2' => $this->eco2,
             'tvoc' => $this->tvoc,
+            'collected_at' => $this->created_at->toIso8601String(),
         ];
     }
 }

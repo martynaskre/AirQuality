@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import Combine
 
 struct DevicesView: View {
     @Environment(UiState.self) var uiState
@@ -14,6 +15,13 @@ struct DevicesView: View {
     @Environment(\.modelContext) private var modelContext
     
     @Query(sort: \Device.name) private var devices: [Device]
+    
+    @State private var deviceData: [UUID: DeviceDTO] = [:]
+    @State private var isLoading = false
+    
+    @State private var cancellables = Set<AnyCancellable>()
+    
+    var status: DeviceStatus = .Offline
     
     var body: some View {
         VStack {
@@ -36,15 +44,49 @@ struct DevicesView: View {
                 List {
                     ForEach(devices, id: \.self) { device in
                         NavigationLink(value: UiState.ApplicationRoute.device(device)) {
-                            HStack {
-                                Text(device.name)
+                            HStack(spacing: 15) {
+                                if let data = deviceData[device.id] {
+                                    VStack {
+                                        data.status.image
+                                            .font(.title2)
+                                    }
+                                    .frame(width: 45, height: 45)
+                                    .background(.gray.opacity(0.15))
+                                    .background(data.status.color)
+                                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                                } else {
+                                    VStack {
+                                        ProgressView()
+                                    }
+                                    .frame(width: 45, height: 45)
+                                    .background(.gray.opacity(0.15))
+                                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                                }
+                                VStack(alignment: .leading) {
+                                    Text(device.name)
+                                        .font(.title2)
+                                    if let data = deviceData[device.id] {
+                                        Text("Device is \(status.rawValue)")
+                                            .font(.footnote)
+                                    } else {
+                                        Text("Loading status...")
+                                            .font(.footnote)
+                                    }
+                                }
+                                Spacer()
                             }
                         }
                     }
                     .onDelete(perform: delete)
                 }
+                .refreshable {
+                    self.fetchAllDevices()
+                }
             }
 
+        }
+        .onAppear {
+            self.fetchAllDevices()
         }
         .onChange(of: accessoryManager.pairingSession) { _, pairingSession in
             if let pairingSession = pairingSession {
@@ -78,6 +120,31 @@ struct DevicesView: View {
             
             modelContext.delete(device)
         }
+    }
+    
+    private func fetchAllDevices() {
+        guard !isLoading else { return }
+        isLoading = true
+        
+        let publishers = devices.map { device in
+            device.getCloudService().fetchDevice()
+                .map { (device.id, $0) }
+                .catch { _ in Empty<(UUID, DeviceDTO), Never>() }
+                .eraseToAnyPublisher()
+        }
+        
+        Publishers.MergeMany(publishers)
+            .collect()
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                if case .failure(let error) = completion {
+                    print("Error fetching devices: \(error)")
+                }
+                isLoading = false
+            } receiveValue: { results in
+                deviceData = Dictionary(uniqueKeysWithValues: results)
+            }
+            .store(in: &cancellables)
     }
 }
 

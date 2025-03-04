@@ -19,6 +19,7 @@ class ApiRequest {
         
         self.decoder = JSONDecoder()
         self.decoder.keyDecodingStrategy = .convertFromSnakeCase
+        self.decoder.dateDecodingStrategy = .iso8601
         
         let configuration = URLSessionConfiguration.default
         configuration.urlCache = .shared

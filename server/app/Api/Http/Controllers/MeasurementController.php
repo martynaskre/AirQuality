@@ -12,19 +12,6 @@ use Illuminate\Support\Facades\DB;
 
 class MeasurementController extends Controller
 {
-    public function index(Request $request): MeasurementResource
-    {
-        /* @var $device Device */
-        $device = $request->get('device');
-
-        return new MeasurementResource(
-            $device->measurements()
-                ->orderByDesc('calibrated')
-                ->orderByDesc('created_at')
-                ->firstOrFail()
-        );
-    }
-
     public function store(StoreMeasurementRequest $request): Response
     {
         defer(function () use ($request) {
@@ -59,6 +46,19 @@ class MeasurementController extends Controller
         return response(null, 201, [
             'Content-Length' => 0,
         ]);
+    }
+
+    public function show(Request $request): MeasurementResource
+    {
+        /* @var $device Device */
+        $device = $request->get('device');
+
+        return new MeasurementResource(
+            $device->measurements()
+                ->orderByDesc('calibrated')
+                ->orderByDesc('created_at')
+                ->firstOrFail()
+        );
     }
 
     public function destroy(Request $request): Response

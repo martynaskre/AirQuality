@@ -4,7 +4,7 @@
 constexpr const char* SERIAL_NUMBER = "646974F7-0EBC-4207-8403-9E551B1FE601";
 constexpr const char* PUSH_KEY = "47402C22-65EE-434A-850F-561A8E6AC410";
 
-constexpr const char* SERVER_MEASUREMENTS_ENDPOINT = "http://192.168.1.163:8080/api/measurements";
+constexpr const char* SERVER_MEASUREMENTS_ENDPOINT = "http://airquality.skrebe.me/api/measurements";
 
 #define LED_PIN 17
 #define BUTTON_PIN 14

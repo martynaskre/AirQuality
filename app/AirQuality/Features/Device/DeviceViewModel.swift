@@ -29,7 +29,7 @@ extension DeviceView {
         
         init(_ device: Device) {
             self.device = device
-            self.cloudService = CloudNetworkService(serialNumber: device.serialNumber)
+            self.cloudService = device.getCloudService()
             
             self.fetchSensors()
             self.checkLocalNetworkAvailability()

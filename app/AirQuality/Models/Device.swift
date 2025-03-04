@@ -28,4 +28,8 @@ final class Device {
         self.accessoryId = accessoryId
         self.serialNumber = serialNumber
     }
+    
+    func getCloudService() -> CloudNetworkService {
+        return .init(serialNumber: self.serialNumber)
+    }
 }

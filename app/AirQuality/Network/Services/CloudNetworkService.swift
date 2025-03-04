@@ -12,9 +12,23 @@ class CloudNetworkService {
     private let request: ApiRequest
 
     init(serialNumber: UUID) {
-        self.request = ApiRequest(baseUrl: "http://192.168.1.163:8080/api", headers: [
-            "Station-Number": serialNumber.uuidString
-        ])
+        do {
+            let serverUrl: String = try Configuration.value(for: .serverUrl)
+            
+            self.request = ApiRequest(baseUrl: "https://\(serverUrl)", headers: [
+                "Station-Number": serialNumber.uuidString
+            ])
+        } catch {
+            fatalError()
+        }
+    }
+    
+    func fetchDevice() -> AnyPublisher<DeviceDTO, ApiError> {
+        let publisher: AnyPublisher<CloudResponseDTO<DeviceDTO>, ApiError> = self.request.request(endpoint: CloudEndpoint.devices)
+        
+        return publisher
+            .map(\.data)
+            .eraseToAnyPublisher()
     }
     
     func fetchMeasurement() -> AnyPublisher<SensorsDTO, ApiError> {
