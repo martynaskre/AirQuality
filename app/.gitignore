@@ -120,4 +120,4 @@ iOSInjectionProject/
 
 .DS_Store
 
-AirQuality/Configuration/env.xcconfig
+env.xcconfig

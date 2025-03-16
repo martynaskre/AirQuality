@@ -6,22 +6,18 @@
 //
 
 import SwiftUI
-import SwiftData
+import Shared
 import Combine
 
 struct DevicesView: View {
     @Environment(UiState.self) var uiState
     @Environment(AccessoryManager.self) var accessoryManager
-    @Environment(\.modelContext) private var modelContext
     
-    @Query(sort: \Device.name) private var devices: [Device]
-    
+    @State private var devices: [Device] = []
     @State private var deviceData: [UUID: DeviceDTO] = [:]
     @State private var isLoading = false
     
     @State private var cancellables = Set<AnyCancellable>()
-    
-    var status: DeviceStatus = .Offline
     
     var body: some View {
         VStack {
@@ -66,7 +62,7 @@ struct DevicesView: View {
                                     Text(device.name)
                                         .font(.title2)
                                     if let data = deviceData[device.id] {
-                                        Text("Device is \(status.rawValue)")
+                                        Text("Device is \(data.status.rawValue)")
                                             .font(.footnote)
                                     } else {
                                         Text("Loading status...")
@@ -112,19 +108,17 @@ struct DevicesView: View {
     
     private func delete(at offsets: IndexSet) {
         for i in offsets {
-            let device = devices[i]
-            
-            if let accessory = accessoryManager.pairedAccessories.first(where: { $0.bluetoothIdentifier == device.accessoryId }) {
-                accessoryManager.removeAccessory(accessory)
-            }
-            
-            modelContext.delete(device)
+            DeviceManager.shared.delete(for: [devices[i].id], accessoryManager: accessoryManager)
         }
+        
+        self.fetchAllDevices()
     }
     
     private func fetchAllDevices() {
         guard !isLoading else { return }
         isLoading = true
+        
+        devices = DeviceManager.shared.get()
         
         let publishers = devices.map { device in
             device.getCloudService().fetchDevice()

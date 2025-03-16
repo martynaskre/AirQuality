@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class CloudNetworkService {
+public class CloudNetworkService {
     private let request: ApiRequest
 
     init(serialNumber: UUID) {
@@ -23,7 +23,7 @@ class CloudNetworkService {
         }
     }
     
-    func fetchDevice() -> AnyPublisher<DeviceDTO, ApiError> {
+    public func fetchDevice() -> AnyPublisher<DeviceDTO, ApiError> {
         let publisher: AnyPublisher<CloudResponseDTO<DeviceDTO>, ApiError> = self.request.request(endpoint: CloudEndpoint.devices)
         
         return publisher
@@ -31,7 +31,7 @@ class CloudNetworkService {
             .eraseToAnyPublisher()
     }
     
-    func fetchMeasurement() -> AnyPublisher<SensorsDTO, ApiError> {
+    public func fetchMeasurement() -> AnyPublisher<SensorsDTO, ApiError> {
         let publisher: AnyPublisher<CloudResponseDTO<SensorsDTO>, ApiError> = self.request.request(endpoint: CloudEndpoint.measurements)
         
         return publisher

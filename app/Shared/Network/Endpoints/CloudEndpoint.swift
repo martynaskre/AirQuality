@@ -5,7 +5,7 @@
 //  Created by Martynas Skrebė on 31/01/2025.
 //
 
-enum CloudEndpoint: Endpoint {
+public enum CloudEndpoint: Endpoint {
     case devices
     case measurements
     

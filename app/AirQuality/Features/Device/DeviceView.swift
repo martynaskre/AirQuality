@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Charts
+import Shared
 
 struct DeviceView: View {
     @Environment(\.safeAreaInsets) private var insets: EdgeInsets

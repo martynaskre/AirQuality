@@ -8,7 +8,7 @@
 import Foundation
 import OSLog
 
-enum ApiError: Error, Equatable {
+public enum ApiError: Error, Equatable {
     case unknown
     
     static func processResponse(data: Data, response: URLResponse) throws -> Data {

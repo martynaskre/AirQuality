@@ -5,6 +5,6 @@
 //  Created by Martynas Skrebė on 01/03/2025.
 //
 
-struct CloudResponseDTO<T: Decodable>: Decodable {
-    let data: T
+public struct CloudResponseDTO<T: Decodable>: Decodable {
+    public let data: T
 }

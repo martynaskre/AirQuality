@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-enum DeviceStatus: String, Decodable {
+public enum DeviceStatus: String, Decodable {
     case Operational = "operational"
     case Delayed = "delayed"
     case Offline = "offline"
     
-    var image: Image {
+    public var image: Image {
         switch self {
         case .Operational:
             return .init(systemName: "dot.radiowaves.left.and.right")
@@ -23,7 +23,7 @@ enum DeviceStatus: String, Decodable {
         }
     }
     
-    var color: Color {
+    public var color: Color {
         switch self {
         case .Operational:
             return .green

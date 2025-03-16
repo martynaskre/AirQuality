@@ -26,7 +26,6 @@ struct AirQualityApp: App {
                     }
             }
             .navigationViewStyle(.stack)
-            .modelContainer(for: [Device.self])
         }
         .environment(uiState)
         .environment(pairingManager)

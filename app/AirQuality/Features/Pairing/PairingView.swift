@@ -7,12 +7,11 @@
 
 import SwiftUI
 import AccessorySetupKit
-import SwiftData
+import Shared
 
 struct PairingView: View {
     @Environment(UiState.self) var uiState
     @Environment(AccessoryManager.self) var accessoryManager
-    @Environment(\.modelContext) private var modelContext
 
     @State private var pairingSession: PairingSession
     
@@ -49,7 +48,7 @@ struct PairingView: View {
                         serialNumber: serialNumber
                     )
                     
-                    modelContext.insert(newDevice)
+                    DeviceManager.shared.create(newDevice)
                 }
             }
         }

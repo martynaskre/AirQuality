@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import OSLog
 
-class ApiRequest {
+public class ApiRequest {
     private let baseUrl: String
     private let session: URLSession
     private let decoder: JSONDecoder
@@ -72,12 +72,10 @@ class ApiRequest {
     
     func request<T: Decodable>(url: URL, httpMethod: String = "GET", params: [(String, String)]? = nil, formData: Encodable? = nil) -> AnyPublisher<T, ApiError> {
         let request = Self.makeRequest(url: url, httpMethod: httpMethod, params: params, formData: formData)
-        
-#if DEBUG
+
         if let url = request.url?.debugDescription {
             Logger.networkLogging.debug("[Network] Request to: \(url)")
         }
-#endif
                 
         return session.dataTaskPublisher(for: request)
             .tryMap { data, response in
@@ -104,12 +102,10 @@ class ApiRequest {
     
     func request(url: URL, httpMethod: String = "GET", params: [(String, String)]? = nil, formData: Encodable? = nil) -> AnyPublisher<Void, ApiError> {
         let request = Self.makeRequest(url: url, httpMethod: httpMethod, params: params, formData: formData)
-        
-#if DEBUG
+
         if let url = request.url?.debugDescription {
             Logger.networkLogging.debug("[Network] Request to: \(url)")
         }
-#endif
         
         return session.dataTaskPublisher(for: request)
             .tryMap { data, response in
@@ -120,7 +116,7 @@ class ApiRequest {
                 if let apiError = error as? ApiError {
                     return apiError
                 } else {
-                    Logger.networkLogging.error("[APIRequest] A parsing error occurred: \(error)")
+                    Logger.networkLogging.error("[Network] A parsing error occurred: \(error)")
 
                     return ApiError.unknown
                 }

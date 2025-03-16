@@ -8,6 +8,7 @@
 import SwiftUI
 import Network
 import Combine
+import Shared
 
 extension DeviceView {
     @Observable
@@ -109,6 +110,8 @@ extension DeviceView.ViewModel: WebSocketDelegate {
             let sensorData = try JSONDecoder().decode(SensorsDTO.self, from: message)
             
             self.sensorData = sensorData
-        } catch {}
+        } catch {
+            print(error)
+        }
     }
 }
