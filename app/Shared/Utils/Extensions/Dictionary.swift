@@ -5,7 +5,7 @@
 //  Created by Martynas Skrebė on 01/03/2025.
 //
 
-extension Dictionary where Key == String, Value == String {
+public extension Dictionary where Key == String, Value == String {
     func merging(with other: [String: String]) -> [String: String] {
         var merged = self
         
@@ -16,4 +16,3 @@ extension Dictionary where Key == String, Value == String {
         return merged
     }
 }
-

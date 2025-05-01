@@ -14,6 +14,8 @@ struct DeviceView: View {
     
     @State var viewModel: ViewModel
     
+    private let gaugeGradient = Gradient(colors: [.red, .orange, .yellow, .green])
+    
     init(_ device: Device) {
         self._viewModel = .init(wrappedValue: .init(device))
     }
@@ -31,12 +33,12 @@ struct DeviceView: View {
             .ignoresSafeArea(.container, edges: .top)
             ScrollView {
                 VStack(spacing: 20) {
-                    Gauge(value: 20, in: 0...100) {} currentValueLabel: {
-                        Text("\(Int(20))")
-                            .foregroundColor(Color.green)
+                    Gauge(value: Double(viewModel.sensorData?.score ?? 0), in: 0...100) {} currentValueLabel: {
+                        Text("\(viewModel.sensorData?.score ?? 0)")
+                            .foregroundStyle(gaugeGradient.color(for: viewModel.sensorData?.score ?? 0))
                     }
                     .gaugeStyle(.accessoryCircular)
-                    .tint(Gradient(colors: [.red, .orange, .yellow, .green]))
+                    .tint(gaugeGradient)
                     .scaleEffect(2)
                     Text("Air Quality Score")
                         .font(.headline)
@@ -102,7 +104,7 @@ struct DeviceView: View {
                     VStack {
                         Text("Pressure")
                             .font(.headline)
-                        Text(sensorData.pressure.formatted())
+                        Text(sensorData.pressure.humanFormat())
                             .font(.title2)
                             .bold()
                     }

@@ -60,7 +60,7 @@ struct AirQualityProvider: AppIntentTimelineProvider {
             
             return Timeline(entries: [
                 .init(
-                    score: 100,
+                    score: sensorData.score,
                     temperature: sensorData.temperature,
                     humidity: sensorData.humidity,
                     pressure: sensorData.pressure,

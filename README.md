@@ -9,6 +9,7 @@ This is a monorepo containing multiple components. Setup instructions for each c
 - [iOS Application](./app/)
 - [IoT Device](./device/)
 - [Web Server](./server/)
+- [Enclosure](./enclosure/)
 
 ## Setup
 

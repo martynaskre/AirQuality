@@ -8,9 +8,9 @@
 import Foundation
 import OSLog
 
-extension Logger {
-    public static let networkLogging = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "Network")
-    public static let dataManagerLogging = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "Data Manager")
-    public static let entityQueryLogging = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "Entity Query")
-    public static let widgetLogging = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "Widget")
+public extension Logger {
+    static let networkLogging = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "Network")
+    static let dataManagerLogging = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "Data Manager")
+    static let entityQueryLogging = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "Entity Query")
+    static let widgetLogging = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "Widget")
 }

@@ -28,7 +28,6 @@ task('deploy', [
     'deploy:vendors',
     'artisan:config:cache',
     'artisan:route:cache',
-    'artisan:view:cache',
     'artisan:event:cache',
     'artisan:migrate',
     'deploy:publish',

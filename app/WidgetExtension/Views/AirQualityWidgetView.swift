@@ -9,16 +9,18 @@ import SwiftUI
 
 struct AirQualityWidgetView : View {
     var entry: AirQualityProvider.Entry
+    
+    private let gaugeGradient = Gradient(colors: [.red, .orange, .yellow, .green])
 
     var body: some View {
         HStack(alignment: .center) {
             VStack(spacing: 20) {
                 Gauge(value: Float(entry.score), in: 0...100) {} currentValueLabel: {
                     Text("\(entry.score)")
-                        .foregroundColor(Color.green)
+                        .foregroundStyle(gaugeGradient.color(for: entry.score))
                 }
                 .gaugeStyle(.accessoryCircular)
-                .tint(Gradient(colors: [.red, .orange, .yellow, .green]))
+                .tint(gaugeGradient)
                 .scaleEffect(1.5)
                 Text("Air Quality Score")
                     .font(.subheadline)
@@ -52,7 +54,7 @@ struct AirQualityWidgetView : View {
                 VStack {
                     Text("Pressure")
                         .font(.system(size: 11))
-                    Text(entry.pressure.formatted())
+                    Text(entry.pressure.humanFormat())
                         .font(.system(size: 12))
                         .bold()
                 }
