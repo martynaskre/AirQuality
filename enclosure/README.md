@@ -1,6 +1,8 @@
 # AirQuality Enclosure
 
-![Render of IoT device enclosure](Enclosure.png)
+<p align="center">
+  <img src="Enclosure.png">
+</p>
 
 This folder contains 3D models and Fusion 360 design files for an IoT device enclosure. For your convenience, STL files are included so you can 3D print the enclosure yourself.
 
@@ -13,4 +15,6 @@ Assembly instructions:
 4. Slide other electronics into place.
 5. Cover the front opening with metal wire mesh.
 
-![Render of assembled enclosure](AssembledEnclosure.png)
+<p align="center">
+  <img src="AssembledEnclosure.png">
+</p>
