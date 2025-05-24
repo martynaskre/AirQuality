@@ -12,7 +12,15 @@ public struct SensorsDTO: Decodable {
         case lux, temperature, pressure, humidity, eco2, tvoc, collectedAt
     }
     
-    public let score: Int
+    public var score: Int {
+        let temperatureScore = max(0, 100 - max(0, abs(temperature.value - 22) - 2) * 20)
+        let humidityScore = max(0, 100 - abs(humidity - 40) * 2)
+        let eco2Score = max(0, 100 - max(eCO2 - 400, 0) / 10)
+        let tvocScore = max(0, 100 - max(TVOC - 400, 0) / 5)
+        
+        return Int(temperatureScore * 0.25 + humidityScore * 0.25 + eco2Score * 0.25 + tvocScore * 0.25)
+    }
+    
     public let lux: Measurement<UnitIlluminance>
     public let temperature: Measurement<UnitTemperature>
     public let pressure: Measurement<UnitPressure>
@@ -30,15 +38,6 @@ public struct SensorsDTO: Decodable {
         self.humidity = try container.decode(Double.self, forKey: .humidity)
         self.eCO2 = try container.decode(Double.self, forKey: .eco2)
         self.TVOC = try container.decode(Double.self, forKey: .tvoc)
-        
-        self.score = AirQualityPredictor.shared.predict(
-            lux: self.lux.value,
-            temperature: self.temperature.value,
-            pressure: self.pressure.value,
-            humidity: self.humidity,
-            eCO2: self.eCO2,
-            TVOC: self.TVOC
-        )
         
         do {
             self.collectedAt = try container.decode(Date.self, forKey: .collectedAt)
